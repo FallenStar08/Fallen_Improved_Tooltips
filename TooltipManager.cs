@@ -4,7 +4,7 @@ using Il2CppItemFiltering;
 using MelonLoader;
 using UnityEngine;
 
-namespace Fallen_LE_Mods
+namespace Fallen_LE_Mods.Features
 
 
 {

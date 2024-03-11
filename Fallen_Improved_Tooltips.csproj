@@ -1,4 +1,5 @@
 ﻿
+
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -6,6 +7,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Fallen_LE_Mods\Features\FallenUtils.cs" Link="FallenUtils.cs" />
+    <Compile Include="..\Fallen_LE_Mods\Features\ThingsKeeper.cs" Link="ThingsKeeper.cs" />
+    <Compile Include="..\Fallen_LE_Mods\Features\TooltipManager.cs" Link="TooltipManager.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -57,5 +64,8 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
-
+  <Target Name="CopyLinkedFiles" BeforeTargets="Build">
+    <Copy SourceFiles="%(Compile.Identity)" DestinationFiles="%(Compile.Link)"
+    SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Condition="'%(Compile.Link)' != ''" />
+  </Target>
 </Project>

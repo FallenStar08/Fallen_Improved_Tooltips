@@ -1,8 +1,13 @@
 ﻿
 using Il2Cpp;
-using Il2CppItemFiltering;
 using MelonLoader;
 using UnityEngine;
+using Il2CppInterop.Runtime;
+using System.Reflection;
+using System.Timers;
+using Il2CppItemFiltering;
+using Fallen_LE_Mods.Features;
+using Il2CppTMPro;
 
 namespace Fallen_LE_Mods
 {
@@ -45,7 +50,7 @@ namespace Fallen_LE_Mods
 
         public static Rule? MatchFilterRule(ItemDataUnpacked _item)
         {
-            if (ThingsKeeper.myManager == null) { return null; }
+            if(ThingsKeeper.myManager == null) { return null; }
 
             for (int i = ThingsKeeper.myManager.Filter.rules.Count - 1; i >= 0; i--)
             {
@@ -61,11 +66,11 @@ namespace Fallen_LE_Mods
         public static ItemDataUnpacked? FindSimilarUniqueItemInStash(ItemDataUnpacked _item)
         {
             if (!_item.isUniqueSetOrLegendary()) { return null; };
-            if (ThingsKeeper.myStash == null) { return null; }
-            ItemDataUnpacked? highestLPmatch = null;
+            if (ThingsKeeper.myStash==null) { return null; }
+            ItemDataUnpacked? highestLPmatch=null;
             foreach (ItemContainer stashtab in ThingsKeeper.myStash.Containers)
             {
-                foreach (ItemContainerEntry itemEntry in stashtab.content)
+                foreach(ItemContainerEntry itemEntry in stashtab.content)
                 {
                     //uniqueID 0 for non unique/sets
                     var data = itemEntry.data;
@@ -73,8 +78,8 @@ namespace Fallen_LE_Mods
                     {
                         if (highestLPmatch == null)
                         {
-                            highestLPmatch = data.getAsUnpacked();
-
+                           highestLPmatch = data.getAsUnpacked();
+                            
                         }
                         else
                         {
@@ -82,7 +87,7 @@ namespace Fallen_LE_Mods
                             {
                                 highestLPmatch = data.getAsUnpacked();
                             }
-
+                            
                         }
                     }
                 }
@@ -103,6 +108,6 @@ namespace Fallen_LE_Mods
             rectTransform.anchoredPosition = Vector2.zero;
         }
 
-    }
+        }
 
 }
