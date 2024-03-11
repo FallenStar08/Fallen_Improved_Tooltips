@@ -22,7 +22,4 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {92BD9DC3-F2DF-4635-90F1-82C959439237}
 	EndGlobalSection
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\SharedLE\SharedLE.projitems*{5dcc4dd7-03de-4020-96d2-5b1f161253a3}*SharedItemsImports = 5
-	EndGlobalSection
 EndGlobal

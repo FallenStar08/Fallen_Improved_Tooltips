@@ -1,11 +1,11 @@
-﻿using Il2CppLE.UI;
-using HarmonyLib;
-using Il2CppItemFiltering;
+﻿using HarmonyLib;
 using Il2Cpp;
+using Il2CppItemFiltering;
+using Il2CppLE.UI;
 
 namespace Fallen_LE_Mods
 {
-
+    //Probably no need to refresh these on each load but idk...
     [HarmonyPatch(typeof(LoadingScreen), "Disable")]
     public class ThingsKeeper
     {
@@ -14,7 +14,7 @@ namespace Fallen_LE_Mods
         public static TabbedItemContainer? myStash;
         public static void Postfix(ref LoadingScreen __instance)
         {
-            myManager=FallenUtils.GetFilterManager;
+            myManager = FallenUtils.GetFilterManager;
             myItemContainer = ItemContainersManager.instance;
             myStash = myItemContainer.stash;
         }

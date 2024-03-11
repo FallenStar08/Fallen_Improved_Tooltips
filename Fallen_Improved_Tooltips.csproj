@@ -9,12 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Fallen_LE_Mods\Features\FallenUtils.cs" Link="FallenUtils.cs" />
-    <Compile Include="..\Fallen_LE_Mods\Features\ThingsKeeper.cs" Link="ThingsKeeper.cs" />
-    <Compile Include="..\Fallen_LE_Mods\Features\TooltipManager.cs" Link="TooltipManager.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\Games\Last Epoch\MelonLoader\net6\0Harmony.dll</HintPath>
       <Private>False</Private>
@@ -64,8 +58,8 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
-  <Target Name="CopyLinkedFiles" BeforeTargets="Build">
-    <Copy SourceFiles="%(Compile.Identity)" DestinationFiles="%(Compile.Link)"
-    SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Condition="'%(Compile.Link)' != ''" />
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="F:\Mods\LE-Melons\SyncLEclasses.ffs_batch" />
   </Target>
 </Project>
