@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fallen_Improved_Tooltips", "Fallen_Improved_Tooltips.csproj", "{5DCC4DD7-03DE-4020-96D2-5B1F161253A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5DCC4DD7-03DE-4020-96D2-5B1F161253A3}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{5DCC4DD7-03DE-4020-96D2-5B1F161253A3}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{5DCC4DD7-03DE-4020-96D2-5B1F161253A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DCC4DD7-03DE-4020-96D2-5B1F161253A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {92BD9DC3-F2DF-4635-90F1-82C959439237}
+	EndGlobalSection
+EndGlobal
