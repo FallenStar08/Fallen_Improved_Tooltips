@@ -52,7 +52,7 @@ namespace Fallen_LE_Mods
             for (int i = ThingsKeeper.myManager.Filter.rules.Count - 1; i >= 0; i--)
             {
                 Rule rule = ThingsKeeper.myManager.Filter.rules[i];
-                if (rule.Match(_item))
+                if (rule.Match(_item) && rule.type.ToString() != "HIDE" && rule.isEnabled)
                 {
                     //FallenUtils.Log($"Returned rule {rule}");
                     return rule;
