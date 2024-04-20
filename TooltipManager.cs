@@ -78,7 +78,7 @@ namespace Fallen_LE_Mods.Features
         {
             public static void Prefix(Il2Cpp.TooltipItemManager __instance, Il2Cpp.ItemDataUnpacked data, Il2Cpp.TooltipItemManager.SlotType type, UnityEngine.Vector2 tooltipOffset, UnityEngine.Vector3 position, UnityEngine.GameObject opener)
             {
-                FallenUtils.Log("OpenTooltip : ");
+                //FallenUtils.Log("OpenTooltip : ");
                 originalLoreText = data.LoreText;
                 HandleTooltipUpdate(data);
             }
