@@ -11,26 +11,25 @@ namespace Fallen_LE_Mods.Features
 
     public class TooltipManager : MelonMod
     {
-        private static void HandleTooltipUpdate(UITooltipItem.ItemTooltipInfo ttInfo, ItemDataUnpacked item)
+        private static string originalLoreText = "";
+        private static void HandleTooltipUpdate(ItemDataUnpacked item)
         {
             Rule? match = FallenUtils.MatchFilterRule(item);
 
             bool addedFilterText = false;
             if (match != null && (ItemList.isEquipment(item.itemType) || ItemList.isIdol(item.itemType)))
             {
-
-                //FallenUtils.Log("Rule match");
                 var description = match.GetRuleDescription();
                 if (description != null)
                 {
-                    if (ttInfo.loreText == "")
+                    if (item.LoreText == "")
                     {
-                        ttInfo.loreText += $"FilterRule : {description}";
+                        item.LoreText += $"FilterRule : {description}";
                         addedFilterText = true;
                     }
                     else
                     {
-                        ttInfo.loreText += $"\n\n</color>FilterRule : {description}";
+                        item.LoreText += $"\n\n</color>FilterRule : {description}";
                         addedFilterText = true;
                     }
                 }
@@ -46,47 +45,45 @@ namespace Fallen_LE_Mods.Features
                                                                         "with similar LP (Duplicate)";
                 var description = $"Already Owned " + LPdescription;
 
-                if (ttInfo.loreText == "")
+                if (item.LoreText == "")
                 {
-                    ttInfo.loreText += $"{description}";
+                    item.LoreText += $"{description}";
                 }
                 else
                 {
-                    ttInfo.loreText += addedFilterText ? $"\n\n{description}" : $"\n\n</color>{description}";
+                    item.LoreText += addedFilterText ? $"\n\n{description}" : $"\n\n</color>{description}";
                 }
             }
             else if (item.isUniqueSetOrLegendary())
             {
                 var description = $"Not Owned";
-                if (ttInfo.loreText == "")
+
+                if (item.LoreText == "")
                 {
-                    ttInfo.loreText += $"{description}";
+                    item.LoreText += $"{description}";
                 }
                 else
                 {
-                    ttInfo.loreText += $"\n\n</color>{description}";
+                    item.LoreText += $"\n\n</color>{description}";
                 }
             }
+
         }
 
-        [HarmonyPatch(typeof(UITooltipItem), "OpenTooltip", new Type[] { typeof(UITooltipItem.ItemTooltipInfo), typeof(UnityEngine.Vector2), typeof(UnityEngine.GameObject), typeof(ItemDataUnpacked), typeof(TooltipItemManager.SlotType) })]
-        public class UITooltipItemPatch
+        [HarmonyPatch(typeof(TooltipItemManager), "OpenTooltip", new Type[] { typeof(ItemDataUnpacked), typeof(TooltipItemManager.SlotType), typeof(Vector2), typeof(Vector3), typeof(GameObject) })]
+        public class TooltipItemManagerPatch
         {
-            public static void Prefix(ref UITooltipItem __instance, ref UITooltipItem.ItemTooltipInfo ttInfo, ref Vector2 position, ref GameObject targetSlot, ref ItemDataUnpacked _item, ref TooltipItemManager.SlotType slotType)
+            public static void Prefix(Il2Cpp.TooltipItemManager __instance, Il2Cpp.ItemDataUnpacked data, Il2Cpp.TooltipItemManager.SlotType type, UnityEngine.Vector2 tooltipOffset, UnityEngine.Vector3 position, UnityEngine.GameObject opener)
             {
-                //FallenUtils.Log("OpenTooltip");
-                HandleTooltipUpdate(ttInfo, _item);
+                FallenUtils.Log("OpenTooltip : ");
+                originalLoreText = data.LoreText;
+                HandleTooltipUpdate(data);
             }
-            //tooltipInfo.loreText
-        }
-        //OpenGroundTooltip(UITooltipItem.ItemTooltipInfo ttInfo, Vector2 position, GameObject targetSlot, ItemDataUnpacked _item)
-        [HarmonyPatch(typeof(UITooltipItem), "OpenGroundTooltip", new Type[] { typeof(UITooltipItem.ItemTooltipInfo), typeof(UnityEngine.Vector2), typeof(UnityEngine.GameObject), typeof(ItemDataUnpacked) })]
-        public class GroundUITooltipItemPatch
-        {
-            public static void Prefix(ref UITooltipItem __instance, ref UITooltipItem.ItemTooltipInfo ttInfo, ref Vector2 position, ref GameObject targetSlot, ref ItemDataUnpacked _item)
+
+            public static void Postfix(Il2Cpp.TooltipItemManager __instance, Il2Cpp.ItemDataUnpacked data, Il2Cpp.TooltipItemManager.SlotType type, UnityEngine.Vector2 tooltipOffset, UnityEngine.Vector3 position, UnityEngine.GameObject opener)
             {
-                //FallenUtils.Log("GroundItemHoveredToolTip");
-                HandleTooltipUpdate(ttInfo, _item);
+                // Restore the original lore text after modification
+                data.LoreText = originalLoreText;
             }
 
         }

@@ -3,6 +3,7 @@ using Il2Cpp;
 using Il2CppItemFiltering;
 using MelonLoader;
 using UnityEngine;
+using Rule = Il2CppItemFiltering.Rule;
 
 namespace Fallen_LE_Mods
 {
@@ -53,6 +54,7 @@ namespace Fallen_LE_Mods
                 Rule rule = ThingsKeeper.myManager.Filter.rules[i];
                 if (rule.Match(_item))
                 {
+                    //FallenUtils.Log($"Returned rule {rule}");
                     return rule;
                 }
             }
@@ -89,6 +91,7 @@ namespace Fallen_LE_Mods
                 }
 
             }
+            //FallenUtils.Log($"Returned highestLPmatch {highestLPmatch}");
             return highestLPmatch;
         }
 

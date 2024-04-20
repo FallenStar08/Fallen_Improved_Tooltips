@@ -17,6 +17,8 @@ namespace Fallen_LE_Mods
             myManager = FallenUtils.GetFilterManager;
             myItemContainer = ItemContainersManager.instance;
             myStash = myItemContainer.stash;
+
+            //FallenUtils.Log($"myManager {myManager} myItemContainer {myItemContainer} myStash {myStash}");
         }
     }
 }
