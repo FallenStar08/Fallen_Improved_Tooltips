@@ -11,13 +11,12 @@ namespace Fallen_LE_Mods
     {
         public static ItemFilterManager? myManager;
         public static ItemContainersManager? myItemContainer;
-        public static TabbedItemContainer? myStash;
+        public static Il2CppSystem.Collections.Generic.List<Il2Cpp.ItemContainer>? myStash;
         public static void Postfix(ref LoadingScreen __instance)
         {
             myManager = FallenUtils.GetFilterManager;
             myItemContainer = ItemContainersManager.instance;
-            myStash = myItemContainer.stash;
-
+            myStash = StashTabbedUIControls.instance.container.containers;
             //FallenUtils.Log($"myManager {myManager} myItemContainer {myItemContainer} myStash {myStash}");
         }
     }

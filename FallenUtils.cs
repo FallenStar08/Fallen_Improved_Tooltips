@@ -66,7 +66,7 @@ namespace Fallen_LE_Mods
             if (!_item.isUniqueSetOrLegendary()) { return null; };
             if (ThingsKeeper.myStash == null) { return null; }
             ItemDataUnpacked? highestLPmatch = null;
-            foreach (ItemContainer stashtab in ThingsKeeper.myStash.Containers)
+            foreach (ItemContainer stashtab in ThingsKeeper.myStash)
             {
                 foreach (ItemContainerEntry itemEntry in stashtab.content)
                 {
