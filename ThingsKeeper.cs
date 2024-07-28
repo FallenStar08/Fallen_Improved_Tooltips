@@ -15,9 +15,8 @@ namespace Fallen_LE_Mods
         public static void Postfix(ref LoadingScreen __instance)
         {
             myManager = FallenUtils.GetFilterManager;
-            myItemContainer = ItemContainersManager.instance;
+            myItemContainer = ItemContainersManager.Instance;
             myStash = StashTabbedUIControls.instance.container.containers;
-            //FallenUtils.Log($"myManager {myManager} myItemContainer {myItemContainer} myStash {myStash}");
         }
     }
 }

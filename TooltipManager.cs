@@ -20,8 +20,8 @@ namespace Fallen_LE_Mods.Features
             if (match != null && (ItemList.isEquipment(item.itemType) || ItemList.isIdol(item.itemType)))
             {
                 var description = match.GetRuleDescription();
-                //FallenUtils.Log(match.type.ToString());
-                //FallenUtils.Log(match.isEnabled.ToString());
+                FallenUtils.Log(match.type.ToString());
+                FallenUtils.Log(match.isEnabled.ToString());
 
                 if (description != null)
                 {
