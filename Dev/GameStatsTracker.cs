@@ -152,7 +152,7 @@ namespace Fallen_LE_Mods.Dev
             }
 
             private static readonly Queue<DamageEntry> damageQueue = new();
-            private static float trackingWindow = 10f; // Track over the past 10 seconds
+            private static float trackingWindow = 10f;
             private static float lastCleanupTime = 0f;
             private static float cleanupInterval = 1f;
 
