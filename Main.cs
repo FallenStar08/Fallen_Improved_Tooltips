@@ -1,4 +1,6 @@
-﻿using Fallen_LE_Mods.Dev;
+﻿#if RELEASE
+using Fallen_LE_Mods.Dev;
+#endif
 using MelonLoader;
 
 
