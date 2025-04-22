@@ -15,7 +15,7 @@ namespace Fallen_LE_Mods.Dev
     {
         private static TextMeshProUGUI? text;
         private static bool initialized = false;
-        private static GameObject rectangleObject;
+        private static GameObject? rectangleObject;
         private static bool isVisible = true;
         private const KeyCode ToggleKey = KeyCode.F1;
 

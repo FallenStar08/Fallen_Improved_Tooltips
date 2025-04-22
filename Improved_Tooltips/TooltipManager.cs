@@ -13,6 +13,7 @@ namespace Fallen_LE_Mods.Improved_Tooltips
     public class TooltipManager : MelonMod
     {
         private static string originalLoreText = "";
+        private static ItemDataUnpacked? lastModifiedItem;
         private static void HandleTooltipUpdate(ItemDataUnpacked item)
         {
             Rule? match = FallenUtils.MatchFilterRule(item);
@@ -77,21 +78,37 @@ namespace Fallen_LE_Mods.Improved_Tooltips
         [HarmonyPatch(typeof(TooltipItemManager), "OpenItemTooltip", new Type[] { typeof(ItemDataUnpacked), typeof(TooltipItemManager.SlotType), typeof(Vector2), typeof(Vector3), typeof(GameObject), typeof(Vector2), })]
         public class TooltipItemManagerPatch
         {
-            static void Prefix(TooltipItemManager __instance, ItemDataUnpacked data, TooltipItemManager.SlotType type, Vector2 _offset, Vector3 position, GameObject opener, Vector2 openerSize)
+            static void Prefix(
+                    TooltipItemManager __instance,
+                    ItemDataUnpacked data,
+                    TooltipItemManager.SlotType type,
+                    Vector2 _offset,
+                    Vector3 position,
+                    GameObject opener,
+                    Vector2 openerSize)
             {
-                // Store the original lore text before modification
-                originalLoreText = data.LoreText;
-                HandleTooltipUpdate(data);
+                if (data == null) return;
 
+                originalLoreText = data.LoreText;
+                lastModifiedItem = data;
+
+                TooltipManager.HandleTooltipUpdate(data);
             }
 
-            static void Postfix(TooltipItemManager __instance, ItemDataUnpacked data, TooltipItemManager.SlotType type, Vector2 _offset, Vector3 position, GameObject opener, Vector2 openerSize)
+            static void Postfix(
+                TooltipItemManager __instance,
+                ItemDataUnpacked data,
+                TooltipItemManager.SlotType type,
+                Vector2 _offset,
+                Vector3 position,
+                GameObject opener,
+                Vector2 openerSize)
             {
-
-
-                data.LoreText = originalLoreText;
-
-
+                if (lastModifiedItem != null)
+                {
+                    lastModifiedItem.LoreText = originalLoreText;
+                    lastModifiedItem = null;
+                }
             }
 
         }
