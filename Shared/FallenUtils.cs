@@ -1,11 +1,10 @@
-﻿
-using Il2Cpp;
+﻿using Il2Cpp;
 using Il2CppItemFiltering;
 using MelonLoader;
 using UnityEngine;
 using Rule = Il2CppItemFiltering.Rule;
 
-namespace Fallen_LE_Mods
+namespace Fallen_LE_Mods.Shared
 {
     //Maybe this should be split, idk..
     public static class FallenUtils
@@ -47,14 +46,14 @@ namespace Fallen_LE_Mods
 
         public static Rule? MatchFilterRule(ItemDataUnpacked _item)
         {
-            if (ThingsKeeper.myManager == null) { return null; }
+            if (GameReferencesCache.myManager == null) { return null; }
 
-            for (int i = ThingsKeeper.myManager.Filter.rules.Count - 1; i >= 0; i--)
+            for (int i = 0; i <= GameReferencesCache.myManager.Filter.rules.Count - 1; i++)
             {
-                Rule rule = ThingsKeeper.myManager.Filter.rules[i];
+                Rule rule = GameReferencesCache.myManager.Filter.rules[i];
                 if (rule.Match(_item) && rule.type.ToString() != "HIDE" && rule.isEnabled)
                 {
-                    FallenUtils.Log($"Returned rule {rule}");
+                    //FallenUtils.Log($"Returned rule {rule}");
                     return rule;
                 }
             }
@@ -63,16 +62,17 @@ namespace Fallen_LE_Mods
 
         public static ItemDataUnpacked? FindSimilarUniqueItemInStash(ItemDataUnpacked _item)
         {
-            if (!_item.isUniqueSetOrLegendary()) { return null; };
-            if (ThingsKeeper.myStash == null) { return null; }
+            if (!_item.isUniqueSetOrLegendary()) { return null; }
+            ;
+            if (GameReferencesCache.myStash == null) { return null; }
             ItemDataUnpacked? highestLPmatch = null;
-            foreach (ItemContainer stashtab in ThingsKeeper.myStash)
+            foreach (ItemContainer stashtab in GameReferencesCache.myStash)
             {
                 foreach (ItemContainerEntry itemEntry in stashtab.content)
                 {
                     //uniqueID 0 for non unique/sets
                     var data = itemEntry.data;
-                    if (data.isUniqueSetOrLegendary() && (_item.uniqueID == data.uniqueID))
+                    if (data.isUniqueSetOrLegendary() && _item.uniqueID == data.uniqueID)
                     {
                         if (highestLPmatch == null)
                         {
