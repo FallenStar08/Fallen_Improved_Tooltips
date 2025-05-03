@@ -9,14 +9,28 @@ namespace Fallen_LE_Mods.Shared
     [HarmonyPatch(typeof(LoadingScreen), "Disable")]
     public class GameReferencesCache
     {
-        public static ItemFilterManager? myManager;
-        public static ItemContainersManager? myItemContainer;
-        public static Il2CppSystem.Collections.Generic.List<ItemContainer>? myStash;
+        public static ItemFilterManager? itemFilterManager;
+        public static ActorVisuals? playerVisuals;
+        public static ItemContainersManager? itemContainersManager;
+        public static Il2CppSystem.Collections.Generic.List<ItemContainer>? playerStash;
+        public static UIBase? gameUiBase;
+        public static InventoryPanelUI? inventoryPanelUI;
+        public static Il2CppLE.Data.CharacterData? playerData;
+        public static ExperienceTracker? expTracker;
+        public static CharacterDataTracker? characterDataTracker;
         public static void Postfix(ref LoadingScreen __instance)
         {
-            myManager = FallenUtils.GetFilterManager;
-            myItemContainer = ItemContainersManager.Instance;
-            myStash = StashTabbedUIControls.instance.container.containers;
+            itemFilterManager = FallenUtils.GetFilterManager;
+            playerVisuals = PlayerFinder.getPlayerVisuals();
+            itemContainersManager = ItemContainersManager.Instance;
+            playerStash = StashTabbedUIControls.instance.container.containers;
+            gameUiBase = UIBase.instance;
+            inventoryPanelUI = gameUiBase.inventoryPanel.instance.GetComponent<InventoryPanelUI>();
+            playerData = PlayerFinder.getPlayerData();
+            characterDataTracker = PlayerFinder.getPlayerDataTracker();
+            expTracker = PlayerFinder.getExperienceTracker();
+
         }
     }
 }
+

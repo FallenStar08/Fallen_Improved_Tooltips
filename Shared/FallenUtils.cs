@@ -46,11 +46,11 @@ namespace Fallen_LE_Mods.Shared
 
         public static Rule? MatchFilterRule(ItemDataUnpacked _item)
         {
-            if (GameReferencesCache.myManager == null) { return null; }
+            if (GameReferencesCache.itemFilterManager == null) { return null; }
 
-            for (int i = 0; i <= GameReferencesCache.myManager.Filter.rules.Count - 1; i++)
+            for (int i = 0; i <= GameReferencesCache.itemFilterManager.Filter.rules.Count - 1; i++)
             {
-                Rule rule = GameReferencesCache.myManager.Filter.rules[i];
+                Rule rule = GameReferencesCache.itemFilterManager.Filter.rules[i];
                 if (rule.Match(_item) && rule.type.ToString() != "HIDE" && rule.isEnabled)
                 {
                     //FallenUtils.Log($"Returned rule {rule}");
@@ -64,9 +64,9 @@ namespace Fallen_LE_Mods.Shared
         {
             if (!_item.isUniqueSetOrLegendary()) { return null; }
             ;
-            if (GameReferencesCache.myStash == null) { return null; }
+            if (GameReferencesCache.playerStash == null) { return null; }
             ItemDataUnpacked? highestLPmatch = null;
-            foreach (ItemContainer stashtab in GameReferencesCache.myStash)
+            foreach (ItemContainer stashtab in GameReferencesCache.playerStash)
             {
                 foreach (ItemContainerEntry itemEntry in stashtab.content)
                 {
