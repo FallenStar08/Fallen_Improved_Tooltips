@@ -23,7 +23,7 @@ namespace Fallen_LE_Mods.Improved_Tooltips
                 const string LabelMarker = "\u200B\u200B\u200B";  // Invisible marker to track changes
                 yield return null; // Ensure this runs after other postfixes
 
-                if (item == null || !item) yield break;
+                if (!item) yield break;
 
                 ItemDataUnpacked itemDataUnpacked;
                 try
@@ -54,13 +54,11 @@ namespace Fallen_LE_Mods.Improved_Tooltips
                         if (matchedUniqueOrSet != null)
                         {
                             int ownedLP = matchedUniqueOrSet.legendaryPotential;
-                            if (ownedLP > itemDataUnpacked.legendaryPotential)
-                                newSuffix += " <color=#FF0000>↓</color>";
-                            else if (ownedLP < itemDataUnpacked.legendaryPotential)
-                                newSuffix += " <color=#00FF00>↑</color>";
-                            else
-                                newSuffix += " <color=#0000FF>=</color>";
+                            newSuffix = ownedLP > itemDataUnpacked.legendaryPotential ? " <color=#FF0000>↓</color>" :
+                                        ownedLP < itemDataUnpacked.legendaryPotential ? " <color=#00FF00>↑</color>" :
+                                                                                        " <color=#0000FF>=</color>";
                         }
+
                         else if (itemDataUnpacked.isUniqueSetOrLegendary())
                         {
                             newSuffix += " <i><color=#FFD700>NEW</color></i>";
