@@ -58,17 +58,16 @@ namespace Fallen_LE_Mods.MonoScripts
                 ? TimeSpan.FromHours((double)expToNextLevel / expPerHour)
                 : TimeSpan.Zero;
 
-            infos.AppendLine($"Status  : {(IsPaused ? "Paused" : "Active")}");
-            infos.AppendLine($"Gold/h  : {Mathf.Max(Mathf.RoundToInt(totalGold / GetElapsedTime() * 3600f), 0)}");
-            infos.AppendLine($"Exp/h   : {expPerHour}");
-            infos.AppendLine($"lvl↑ in : {estimatedTimeToLevelUp:hh\\:mm\\:ss}");
-            infos.AppendLine($"Rep/h   : {Mathf.Max(Mathf.RoundToInt(totalRep / GetElapsedTime() * 3600f), 0)}");
-            infos.AppendLine($"Favor/h : {Mathf.Max(Mathf.RoundToInt(totalFavor / GetElapsedTime() * 3600f), 0)}");
-            infos.AppendLine($"DPS     : {Mathf.RoundToInt(dps)}");
-            infos.AppendLine($"DPS(avg): {Mathf.RoundToInt(DamageTracker.averageDps)}");
-            infos.AppendLine($"DPS(max): {Mathf.RoundToInt(DamageTracker.maxDps)}");
-            infos.AppendLine($"DMG Ttl : {Mathf.RoundToInt(DamageTracker.totalDamageDealt)}");
-
+            infos.AppendLine($"{"Status",-8}: {(IsPaused ? "Paused" : "Active")}");
+            infos.AppendLine($"{"Gold/h",-8}: {Mathf.Max(Mathf.RoundToInt(totalGold / GetElapsedTime() * 3600f), 0)}");
+            infos.AppendLine($"{"Exp/h",-8}: {expPerHour}");
+            infos.AppendLine($"{"lvl↑ in",-8}: {estimatedTimeToLevelUp:hh\\:mm\\:ss}");
+            infos.AppendLine($"{"Rep/h",-8}: {Mathf.Max(Mathf.RoundToInt(totalRep / GetElapsedTime() * 3600f), 0)}");
+            infos.AppendLine($"{"Favor/h",-8}: {Mathf.Max(Mathf.RoundToInt(totalFavor / GetElapsedTime() * 3600f), 0)}");
+            infos.AppendLine($"{"DPS",-8}: {Mathf.RoundToInt(dps)}");
+            infos.AppendLine($"{"DPS(avg)",-8}: {Mathf.RoundToInt(DamageTracker.averageDps)}");
+            infos.AppendLine($"{"DPS(max)",-8}: {Mathf.RoundToInt(DamageTracker.maxDps)}");
+            infos.AppendLine($"{"DMG Ttl",-8}: {Mathf.RoundToInt(DamageTracker.totalDamageDealt)}");
             textToUpdate.text = infos.ToString();
             InfoCorner.ResizeBackgroundToText();
         }
