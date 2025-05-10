@@ -12,29 +12,33 @@ namespace Fallen_LE_Mods.Improved_Tooltips
 
     public class TooltipManager : MelonMod
     {
-        private static string originalLoreText = "";
-        private static ItemDataUnpacked? lastModifiedItem;
+        private const string LoreMarker = "\u200B\u200B\u200B"; // Invisible marker
+
         private static void HandleTooltipUpdate(ItemDataUnpacked item)
         {
-            Rule? match = FallenUtils.MatchFilterRule(item);
+            if (item == null || item.LoreText.Contains(LoreMarker))
+            {
+                // Already modified
+                int markerIndex = item.LoreText.IndexOf(LoreMarker);
+                if (markerIndex >= 0)
+                    item.LoreText = item.LoreText.Substring(0, markerIndex); // Strip prior additions
+            }
 
+            string additions = "";
             bool addedFilterText = false;
+
+            Rule? match = FallenUtils.MatchFilterRule(item);
             if (match != null && (ItemList.isEquipment(item.itemType) || ItemList.isIdol(item.itemType)))
             {
                 var description = match.GetRuleDescription();
-
                 if (description != null)
                 {
                     if (item.LoreText == "")
-                    {
-                        item.LoreText += $"FilterRule : {description}";
-                        addedFilterText = true;
-                    }
+                        additions += $"FilterRule : {description}";
                     else
-                    {
-                        item.LoreText += $"\n\n</color>FilterRule : {description}";
-                        addedFilterText = true;
-                    }
+                        additions += $"\n\n</color>FilterRule : {description}";
+
+                    addedFilterText = true;
                 }
             }
 
@@ -46,32 +50,22 @@ namespace Fallen_LE_Mods.Improved_Tooltips
                                        ownedLP < item.legendaryPotential ? $"with lower LP : {ownedLP}" :
                                        matchedUniqueOrSet.Equals(item) ? "with similar LP (Self)" :
                                                                         "with similar LP (Duplicate)";
-                var description = $"Already Owned " + LPdescription;
+                string description = $"Already Owned {LPdescription}";
 
-                if (item.LoreText == "")
-                {
-                    item.LoreText += $"{description}";
-                }
-                else
-                {
-                    item.LoreText += addedFilterText ? $"\n\n{description}" : $"\n\n</color>{description}";
-                }
+                additions += addedFilterText ? $"\n\n{description}" : $"\n\n</color>{description}";
             }
             else if (item.isUniqueSetOrLegendary())
             {
-                var description = $"Not Owned";
-
-                if (item.LoreText == "")
-                {
-                    item.LoreText += $"{description}";
-                }
-                else
-                {
-                    item.LoreText += $"\n\n</color>{description}";
-                }
+                string description = "Not Owned";
+                additions += $"\n\n</color>{description}";
             }
 
+            // Only modify if new text would be different
+            string newLore = item.LoreText + additions + LoreMarker;
+            if (item.LoreText != newLore)
+                item.LoreText = newLore;
         }
+
 
         //Postfix(Il2Cpp.UITooltipItem __instance, Il2Cpp.UITooltipItem.ItemTooltipInfo __0, UnityEngine.Vector2 __1, UnityEngine.GameObject __2, Il2Cpp.ItemDataUnpacked __3, Il2Cpp.TooltipItemManager.SlotType __4)
 
@@ -89,27 +83,12 @@ namespace Fallen_LE_Mods.Improved_Tooltips
             {
                 if (data == null) return;
 
-                originalLoreText = data.LoreText;
-                lastModifiedItem = data;
+
 
                 TooltipManager.HandleTooltipUpdate(data);
             }
 
-            static void Postfix(
-                TooltipItemManager __instance,
-                ItemDataUnpacked data,
-                TooltipItemManager.SlotType type,
-                Vector2 _offset,
-                Vector3 position,
-                GameObject opener,
-                Vector2 openerSize)
-            {
-                if (lastModifiedItem != null)
-                {
-                    lastModifiedItem.LoreText = originalLoreText;
-                    lastModifiedItem = null;
-                }
-            }
+
 
         }
     }
