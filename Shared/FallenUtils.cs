@@ -44,21 +44,38 @@ namespace Fallen_LE_Mods.Shared
             }
         }
 
-        public static Rule? MatchFilterRule(ItemDataUnpacked _item)
+        public static Rule? MatchFilterRule(ItemDataUnpacked _item, bool GetHighest = true)
         {
             if (GameReferencesCache.itemFilterManager == null) { return null; }
 
-            for (int i = 0; i <= GameReferencesCache.itemFilterManager.Filter.rules.Count - 1; i++)
+            var rules = GameReferencesCache.itemFilterManager.Filter.rules;
+
+            if (!GetHighest)
             {
-                Rule rule = GameReferencesCache.itemFilterManager.Filter.rules[i];
-                if (rule.Match(_item) && rule.type.ToString() != "HIDE" && rule.isEnabled)
+                for (int i = 0; i < rules.Count; i++)
                 {
-                    //FallenUtils.Log($"Returned rule {rule}");
-                    return rule;
+                    Rule rule = rules[i];
+                    if (rule.Match(_item) && rule.type.ToString() != "HIDE" && rule.isEnabled)
+                    {
+                        return rule;
+                    }
                 }
             }
+            else
+            {
+                for (int i = rules.Count - 1; i >= 0; i--)
+                {
+                    Rule rule = rules[i];
+                    if (rule.Match(_item) && rule.type.ToString() != "HIDE" && rule.isEnabled)
+                    {
+                        return rule;
+                    }
+                }
+            }
+
             return null;
         }
+
 
         public static ItemDataUnpacked? FindSimilarUniqueItemInStash(ItemDataUnpacked _item)
         {

@@ -14,7 +14,7 @@ namespace Fallen_LE_Mods.Improved_Tooltips
         {
             public static void Postfix(GroundItemLabel __instance)
             {
-                FallenUtils.Log("Postfix applied.");
+                //FallenUtils.Log("Postfix applied.");
                 MelonCoroutines.Start(DelayRoutine(__instance));
             }
 
