@@ -1,4 +1,5 @@
 ﻿#if RELEASE
+using Fallen_LE_Mods.Shared;
 using HarmonyLib;
 using Il2Cpp;
 using MelonLoader;
@@ -9,31 +10,7 @@ namespace Fallen_LE_Mods.Dev
     [HarmonyPatch(typeof(GroundItemManager), "dropItemForPlayer")]
     public class ItemDropHandler : MelonMod
     {
-        private static long _lastStoreMaterialsTicks = 0;
-        private static bool _callQueued = false;
-        private static bool _storeRequested = false;
-        private static float _queuedDelay = 0f;
-        private static Actor? _player;
 
-        public override void OnUpdate()
-        {
-            if (_callQueued)
-            {
-                _queuedDelay -= Time.deltaTime * 1000f;
-
-                if (_queuedDelay <= 0f)
-                {
-                    _lastStoreMaterialsTicks = DateTime.UtcNow.Ticks;
-                    _callQueued = false;
-
-                    if (_storeRequested && _player != null)
-                    {
-                        _storeRequested = false;
-                        ItemContainersManager.Instance.TryStoreMaterials(_player);
-                    }
-                }
-            }
-        }
 
         public static bool Prefix(GroundItemManager __instance, Actor player, ItemData itemData, Vector3 location, bool playDropSound)
         {
@@ -46,30 +23,10 @@ namespace Fallen_LE_Mods.Dev
             if (!ItemContainersManager.Instance.attemptToPickupItem(itemData, playerPosition))
                 return true;
 
-            HandleStoreMaterials(player);
+            ItemContainersManager.Instance.TryStoreMaterials(player);
             return false;
         }
 
-        private static void HandleStoreMaterials(Actor player)
-        {
-            long nowTicks = DateTime.UtcNow.Ticks;
-            long elapsedMs = (nowTicks - _lastStoreMaterialsTicks) / TimeSpan.TicksPerMillisecond;
-
-            _player = player;
-            _storeRequested = true;
-
-            if (elapsedMs >= 100)
-            {
-                _lastStoreMaterialsTicks = nowTicks;
-                _storeRequested = false;
-                ItemContainersManager.Instance.TryStoreMaterials(player);
-            }
-            else if (!_callQueued)
-            {
-                _callQueued = true;
-                _queuedDelay = 100f - elapsedMs;
-            }
-        }
     }
 
 
@@ -94,6 +51,41 @@ namespace Fallen_LE_Mods.Dev
         {
             Vector3 playerPosition = player.position();
             location = new Vector3(playerPosition.x, playerPosition.y, playerPosition.z);
+
+        }
+    }
+
+    [HarmonyPatch(typeof(SilkenCocoonData), "DropMemoryAmberAfterDelay")]
+    public class MemoryAmberHandler : MelonMod
+    {
+        public static void Prefix(Vector3 position, int corruption, float quantityModifier, global::Il2CppSystem.Func<int, float, uint> baseQuantity, global::Il2CppSystem.Func<Actor, bool> dropFor, float delay)
+        {
+            Vector3 playerPosition = GameReferencesCache.player.position();
+            position = new Vector3(playerPosition.x, playerPosition.y, playerPosition.z);
+
+        }
+    }
+
+    [HarmonyPatch(typeof(SilkenCocoonData), "DropMemoryAmberInPilesForWeaverMembers")]
+    public class DropMemoryAmberInPilesForWeaverMembersHandler : MelonMod
+    {
+        public static void Prefix(UnityEngine.Vector3 position, int piles, int corruption, float quantityModifier)
+        {
+
+            Vector3 playerPosition = GameReferencesCache.player.position();
+            position = new Vector3(playerPosition.x, playerPosition.y, playerPosition.z);
+
+        }
+    }
+
+    [HarmonyPatch(typeof(SilkenCocoonData), "DropMemoryAmberInPiles", new Type[] { typeof(UnityEngine.Vector3), typeof(int), typeof(int), typeof(float), typeof(Il2CppSystem.Func<Il2Cpp.Actor, bool>) })]
+
+    public class DropMemoryAmberInPilesHandler : MelonMod
+    {
+        public static void Prefix(UnityEngine.Vector3 position, int piles, int corruption, float quantityModifier, Il2CppSystem.Func<Il2Cpp.Actor, bool> dropFor)
+        {
+            Vector3 playerPosition = GameReferencesCache.player.position();
+            position = new Vector3(playerPosition.x, playerPosition.y, playerPosition.z);
 
         }
     }
