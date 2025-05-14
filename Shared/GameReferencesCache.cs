@@ -9,6 +9,7 @@ namespace Fallen_LE_Mods.Shared
     [HarmonyPatch(typeof(LoadingScreen), "Disable")]
     public class GameReferencesCache
     {
+        public static Actor? player;
         public static ItemFilterManager? itemFilterManager;
         public static ActorVisuals? playerVisuals;
         public static ItemContainersManager? itemContainersManager;
@@ -29,6 +30,7 @@ namespace Fallen_LE_Mods.Shared
             playerData = PlayerFinder.getPlayerData();
             characterDataTracker = PlayerFinder.getPlayerDataTracker();
             expTracker = PlayerFinder.getExperienceTracker();
+            player = PlayerFinder.getPlayerActor();
 
         }
     }
