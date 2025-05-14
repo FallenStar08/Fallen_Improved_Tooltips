@@ -11,7 +11,7 @@ using static Fallen_LE_Mods.Improved_Tooltips.GroundLabel;
 
 
 
-//PlayerFinder.getPlayerActor()
+
 
 namespace Fallen_LE_Mods
 {

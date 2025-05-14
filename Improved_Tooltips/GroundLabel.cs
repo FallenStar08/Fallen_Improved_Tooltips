@@ -43,7 +43,6 @@ namespace Fallen_LE_Mods.Improved_Tooltips
 
                 bool isModified = currentText.Contains(LabelMarker);
 
-                // If already modified, we don't want to strip the base name, just append the suffix if needed.
                 if (!isModified)
                 {
                     if (itemDataUnpacked.isUnique())
