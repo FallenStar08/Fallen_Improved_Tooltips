@@ -4,6 +4,8 @@
 //using MelonLoader;
 //using UnityEngine;
 
+//TODO try implementing the vanilla pausing logic happening when you open the menu
+
 //namespace Fallen_LE_Mods.Dev
 //{
 //    public class UIBasedPause : MelonMod
