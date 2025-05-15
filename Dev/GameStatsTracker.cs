@@ -19,6 +19,7 @@ namespace Fallen_LE_Mods.Dev
         public static float repPerHour = 0f;
         public static float totalFavor = 0f;
         public static float favorPerHour = 0f;
+        public static float memoryAmberPerHour = 0f;
         public static float dps = 0f;
         private static float startTime;
         private static float pausedTime;
