@@ -69,7 +69,7 @@ namespace Fallen_LE_Mods.Improved_Tooltips
                         if (itemText.text != newFullText)
                         {
                             itemText.text = item.emphasized ? newFullText.ToUpper() : newFullText;
-                            //item.sceneFollower?.calculateDimensions();
+                            item.sceneFollower?.calculateDimensions();
                         }
                     }
                 }
