@@ -3,6 +3,7 @@ using Fallen_LE_Mods.MonoScripts;
 using Fallen_LE_Mods.Shared;
 using HarmonyLib;
 using Il2CppLE.UI;
+using Il2CppRewired.Utils;
 using Il2CppTMPro;
 using MelonLoader;
 using UnityEngine;
@@ -38,10 +39,14 @@ namespace Fallen_LE_Mods.Dev
         {
             GameObject canvas = GameObject.Find("Canvas");
             GameObject questTitle = GameObject.Find("QuestName");
-            var questText = questTitle.GetComponent<TextMeshProUGUI>();
-            var questFont = questText.font;
+            TMP_FontAsset? questFont = null;
+            if (!questTitle.IsNullOrDestroyed())
+            {
+                var questText = questTitle.GetComponent<TextMeshProUGUI>();
+                questFont = questText.font;
+            }
 
-            if (canvas != null)
+            if (!canvas.IsNullOrDestroyed())
             {
                 Melon<MyMod>.Logger.Msg("Version object found!");
                 // Make our bg & txt holding compo
@@ -64,7 +69,7 @@ namespace Fallen_LE_Mods.Dev
                 text = textObject.AddComponent<TextMeshProUGUI>();
                 Melon<MyMod>.Logger.Msg("TextMeshPro Created");
                 text.fontSize = 16;
-                if (questFont)
+                if (!questFont.IsNullOrDestroyed())
                 {
                     text.font = questFont;
                 }
