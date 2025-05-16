@@ -33,7 +33,7 @@ namespace Fallen_LE_Mods
             var patchMethod = AccessTools.Method(typeof(GroundLabelPatch), "Postfix");
             var patch = new HarmonyMethod(patchMethod);
             HarmonyInstance.Patch(targetMethod, null, patch);
-            FallenUtils.Log("Patch applied successfully.");
+            //FallenUtils.Log("Patch applied successfully.");
 
 
         }
@@ -52,6 +52,8 @@ namespace Fallen_LE_Mods
             {
                 GameStatsTracker.Resume();
             }
+
+            ShrineAutoActivator.OnSceneWasLoadedHandler(buildIndex, sceneName);
 
         }
 
