@@ -16,7 +16,7 @@ namespace Fallen_LE_Mods.Shared
 
         public static void MakeNotification(string msg)
         {
-            Il2Cpp.Notifications.ObjectiveCompleted(msg);
+            Il2Cpp.Notifications.ShowGenericNotification(msg, 1, 1, 1);
         }
 
         public static void IncrementOrInitialize(Dictionary<string, int> dict, string key)
