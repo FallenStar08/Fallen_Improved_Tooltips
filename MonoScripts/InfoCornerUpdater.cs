@@ -1,6 +1,7 @@
 ﻿#if RELEASE
 using System.Text;
 using Fallen_LE_Mods.Dev;
+using Fallen_LE_Mods.Shared;
 using Il2CppTMPro;
 using MelonLoader;
 using UnityEngine;
@@ -43,7 +44,11 @@ namespace Fallen_LE_Mods.MonoScripts
             isVisible = !isVisible;
 
             if (textToUpdate != null)
+            {
                 textToUpdate.gameObject.SetActive(isVisible);
+                FallenUtils.MakeNotification($"Visibility toggled : {(isVisible ? "ON" : "OFF")}");
+            }
+
 
             if (backgroundObject != null)
                 backgroundObject.SetActive(isVisible);

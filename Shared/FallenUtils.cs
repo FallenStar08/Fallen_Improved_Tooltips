@@ -14,6 +14,11 @@ namespace Fallen_LE_Mods.Shared
             Melon<MyMod>.Logger.Msg(msg);
         }
 
+        public static void MakeNotification(string msg)
+        {
+            Il2Cpp.Notifications.ObjectiveCompleted(msg);
+        }
+
         public static void IncrementOrInitialize(Dictionary<string, int> dict, string key)
         {
             // Try to get the value for the key
